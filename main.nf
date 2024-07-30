@@ -2,19 +2,19 @@
 process MISSINGQC {
     
     input:
-    val prefix
+    val sample
 
     output:
     tuple path("*.smiss"), path("*.vmiss")
-    tuple path("${prefix}_postQC.bed"), path("${prefix}_postQC.bim"), path("${prefix}_postQC.fam")
+    tuple path("${sample}_postQC.bed"), path("${sample}_postQC.bim"), path("${sample}_postQC.fam")
 
     script:
     """
-    plink2 --bfile ${params.dataset}/${prefix} --missing --out ${prefix}
-    plink2 --bfile ${params.dataset}/${prefix} --geno ${task.ext.relaxed_thres} --make-bed --out ${prefix}_filt1
-    plink2 --bfile ${prefix}_filt1 --mind ${task.ext.relaxed_thres} --make-bed --out ${prefix}_filt2
-    plink2 --bfile ${prefix}_filt2 --geno ${task.ext.stringent_thres} --make-bed --out ${prefix}_filt3
-    plink2 --bfile ${prefix}_filt3 --mind ${task.ext.stringent_thres} --make-bed --out ${prefix}_postQC
+    plink2 --bfile ${params.dataset}/${sample} --missing --out ${sample}
+    plink2 --bfile ${params.dataset}/${sample} --geno ${task.ext.relaxed_thres} --make-bed --out ${sample}_filt1
+    plink2 --bfile ${sample}_filt1 --mind ${task.ext.relaxed_thres} --make-bed --out ${sample}_filt2
+    plink2 --bfile ${sample}_filt2 --geno ${task.ext.stringent_thres} --make-bed --out ${sample}_filt3
+    plink2 --bfile ${sample}_filt3 --mind ${task.ext.stringent_thres} --make-bed --out ${sample}_postQC
     """
 }
 
@@ -35,7 +35,6 @@ process PLOTMISSING {
 
 // Create ethnic group tables
 process CREATE_ETHNIC_TABLES {
-
     input:
     val ethnic_file
 
@@ -82,8 +81,7 @@ process GWAS {
 
 // Identify common variants and output the associated QQplot and Manhattan plot
 process COMMONVARIANT {
-    publishDir "$params.results/$params.prefix/gwas_output", pattern: "*.{png,csv}"
-
+    
     input:
     tuple val(var_string), path(files)
 
@@ -101,7 +99,7 @@ process COMMONVARIANT {
 // Run workflow
 workflow {
     // Run QC and plot missingness
-    (missing_ch, filtered_ch) = MISSINGQC(params.prefix)
+    (missing_ch, filtered_ch) = MISSINGQC(params.sample)
     PLOTMISSING(missing_ch)
     
     // Get the base path for the genotype files in the tuple
