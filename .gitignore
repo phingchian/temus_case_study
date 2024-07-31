@@ -8,3 +8,6 @@ work/
 
 # Nextflow output
 results/
+
+# System
+.DS_Store

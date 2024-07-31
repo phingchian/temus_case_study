@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def plot_hist(ax, filepath, col, title='', ylabel='Frequency', xlabel='Proportion', xlim=None, apply_log=False):
     """
     Plot a histogram of the selected column from a file

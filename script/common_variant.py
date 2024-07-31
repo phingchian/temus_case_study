@@ -4,6 +4,7 @@ import pandas as pd
 import gwaslab as gl
 from pathlib import Path
 
+
 class CommonVariant:
     """A class to find common variants across multiple GWAS result files and plot the results."""
 

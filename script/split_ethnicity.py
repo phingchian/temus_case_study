@@ -3,6 +3,7 @@ import argparse
 import pandas as pd
 from pathlib import Path
 
+
 def split_ethnicity(pop_table):
     """Splits a population table by ethnicity and saves each group to a separate file.
 
