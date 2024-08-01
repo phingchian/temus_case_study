@@ -66,15 +66,15 @@ The pipeline is configured using a `nextflow.config` file. You can modify this f
 
 ## Running the Pipeline
 
-The pipeline encompasses the following steps:
+The pipeline encompasses the following steps *[Nextflow Process]*:
 
 ```
---> Remove high-missingness SNPs/Individuals 
---> Plot missingness 
---> Split genotype files by ethnicity 
---> Perform GWAS on each ethnicity 
---> Identify common variants for each phenotype 
---> Plot Manhattan and QQ diagrams on phenotypes with common significant variants
+--> Remove high-missingness SNPs/Individuals [MISSINGQC]
+--> Plot missingness [PLOTMISSING]
+--> Split genotype files by ethnicity [SPLITSAMPLES]
+--> Perform GWAS on each ethnicity [GWAS]
+--> Identify common variants for each phenotype [COMMONVARIANT]
+    --> Plot Manhattan and QQ diagrams on phenotypes with common significant variants
 ```
 
 To run the pipeline:
