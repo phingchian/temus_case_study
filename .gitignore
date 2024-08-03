@@ -11,3 +11,6 @@ results/
 
 # System
 .DS_Store
+
+# Testing
+exploratory.ipynb
